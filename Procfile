@@ -1,0 +1,1 @@
+worker: python mvp_connect_talking_bot.py
