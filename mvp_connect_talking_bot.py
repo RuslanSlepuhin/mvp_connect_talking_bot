@@ -31,7 +31,7 @@ class TalkingBot:
         self.user_chat_to = None
         self.user_first_name = None
         self.user_last_name = None
-        self.admin_id = 1763672666
+        self.admin_id = 758905227
         self.dict_users = {}
         self.client = None
         self.active_dialog = {}
