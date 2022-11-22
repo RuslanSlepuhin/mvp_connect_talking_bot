@@ -37,7 +37,8 @@ class TalkingBot:
         async def send_welcome(message: types.Message):
 
             if message.from_user.id != self.admin_id:
-                self.message_hystory.append(await bot.send_message(self.admin_id, f'<i>Стартовал пользователь с id {message.from_user.id}</i>', parse_mode='html'))
+                self.message_hystory.append(await bot.send_message(self.admin_id, f'<i>Стартовал пользователь с id {message.from_user.id}\n
+                                                                                    @{message.from_user.username}</i>', parse_mode='html'))
 
                 talking_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
                 talking_start = KeyboardButton('Начать диалог')
