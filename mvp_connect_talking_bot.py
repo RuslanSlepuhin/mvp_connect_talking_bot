@@ -40,17 +40,17 @@ class TalkingBot:
         self.message_from_admin_to_user = {}
         self.temporary_msg = None
         self.con = psycopg2.connect(
-            # database = config['DBlocal']['database'],
-            # user = config['DBlocal']['user'],
-            # host = config['DBlocal']['host'],
-            # password = config['DBlocal']['password'],
-            # port = config['DBlocal']['port'],
             database=os.getenv('database'),
             user=os.getenv('user'),
-            host=os.getenv('host='),
+            host=os.getenv('host'),
             password=os.getenv('password'),
             port=os.getenv('port')
         )
+        # database = config['DBlocal']['database'],
+        # user = config['DBlocal']['user'],
+        # host = config['DBlocal']['host'],
+        # password = config['DBlocal']['password'],
+        # port = config['DBlocal']['port'],
         self.cur = self.con.cursor()
         self.db = DB(self.con, self.cur)
         self.keyboard_users_in_active_dialogs = ReplyKeyboardMarkup(resize_keyboard=True)
