@@ -2,9 +2,7 @@ import configparser
 import logging
 import os
 from datetime import datetime
-
 import psycopg2
-
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
@@ -42,20 +40,25 @@ class TalkingBot:
         self.message_from_admin_to_user = {}
         self.temporary_msg = None
         self.con = psycopg2.connect(
-            database = config['DB']['database'],
-            user = config['DB']['user'],
-            host = config['DB']['host'],
-            password = config['DB']['password'],
-            port = config['DB']['port'],
+            # database = config['DBlocal']['database'],
+            # user = config['DBlocal']['user'],
+            # host = config['DBlocal']['host'],
+            # password = config['DBlocal']['password'],
+            # port = config['DBlocal']['port'],
+            database=os.getenv('database'),
+            user=os.getenv('user'),
+            host=os.getenv('host='),
+            password=os.getenv('password'),
+            port=os.getenv('port')
         )
         self.cur = self.con.cursor()
         self.db = DB(self.con, self.cur)
         self.keyboard_users_in_active_dialogs = ReplyKeyboardMarkup(resize_keyboard=True)
         self.keyboard_users_in_active_dialogs.row(KeyboardButton('Close active dialog'), KeyboardButton('Switch active dialog'))
         self.talking_keyboard = None
-
+        # 5755261667 (Ruslan)
         # 1763672666 (Настя)
-    # 758905227 (Александр)
+        # 758905227 (Александр)
     def main_self(self):
 
         @dp.message_handler(commands=['start'])
@@ -63,7 +66,9 @@ class TalkingBot:
 
             if message.from_user.id != self.admin_id:
                 self.message_hystory.append(await bot.send_message(self.admin_id, f'<i>Стартовал пользователь с id {message.from_user.id}\n{message.from_user.username}</i>', parse_mode='html'))
+                # self.message_hystory.append(await bot.send_message(message.chat.id, f'<i>Стартовал пользователь с id {message.from_user.id}\n{message.from_user.username}</i>', parse_mode='html'))
 
+                print('user has started')
                 self.talking_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
                 talking_start = KeyboardButton('Начать диалог')
                 self.talking_keyboard.add(talking_start)
