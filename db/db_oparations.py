@@ -12,10 +12,15 @@ class DB:
         self.check_table_users_exists()
         user_exists = self.check_user_exist(user_dict['id'])
 
+        if not user_dict['username']:
+            username = ''
+        else:
+            username = user_dict['username'].strip()
+
         if not user_exists:
             new_post = f"""INSERT INTO users (id_user, first_name, last_name, username, data_first_connect, user_chat_to, active)
                             VALUES ({user_dict['id']}, '{user_dict['first_name']}', '{user_dict['last_name']}',
-                            '{user_dict['username'].strip()}', '{datetime.now()}', '{user_dict['user_chat_to']}', '{False}')"""
+                            '{username}', '{datetime.now()}', '{user_dict['user_chat_to']}', '{False}')"""
             with self.con:
                 print(new_post)
                 self.cur.execute(new_post)
