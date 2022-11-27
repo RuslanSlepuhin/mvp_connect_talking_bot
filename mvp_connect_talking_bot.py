@@ -7,14 +7,12 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils import executor
+from settings.variables_area import database, user, password, port, token, host
 
 from db.db_oparations import DB
 
 config = configparser.ConfigParser()
 config.read("./settings/config.ini")
-
-token = os.getenv('token')
-# token = config['Token']['token']
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=token)
@@ -40,17 +38,13 @@ class TalkingBot:
         self.message_from_admin_to_user = {}
         self.temporary_msg = None
         self.con = psycopg2.connect(
-            database=os.getenv('database'),
-            user=os.getenv('user'),
-            host=os.getenv('host'),
-            password=os.getenv('password'),
-            port=os.getenv('port')
+            database=database,
+            user=user,
+            host=host,
+            password=password,
+            port=port
         )
-        # database = config['DBlocal']['database'],
-        # user = config['DBlocal']['user'],
-        # host = config['DBlocal']['host'],
-        # password = config['DBlocal']['password'],
-        # port = config['DBlocal']['port'],
+
         self.cur = self.con.cursor()
         self.db = DB(self.con, self.cur)
         self.keyboard_users_in_active_dialogs = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -69,6 +63,13 @@ class TalkingBot:
                 # self.message_hystory.append(await bot.send_message(message.chat.id, f'<i>Стартовал пользователь с id {message.from_user.id}\n{message.from_user.username}</i>', parse_mode='html'))
 
                 print('user has started')
+
+                await bot.send_message(message.chat.id, f"Добрый день, {message.from_user.first_name}!\n"
+                                                        f"На связи бот MVP-connect.\n"
+                                                        f"С его помощью Вы сможете задать все вопросы оператору.\n"
+                                                        f"Для начала диалога, нажмите кнопку [Начать диалог] внизу.\n"
+                                                        f"Как только оператор примет Ваш запрос, Вы увидите сообщение \"Оператор на связи\"")
+
                 self.talking_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
                 talking_start = KeyboardButton('Начать диалог')
                 self.talking_keyboard.add(talking_start)
