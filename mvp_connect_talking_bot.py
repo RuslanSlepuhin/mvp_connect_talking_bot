@@ -64,16 +64,16 @@ class TalkingBot:
 
                 print('user has started')
 
-                await bot.send_message(message.chat.id, f"Добрый день, {message.from_user.first_name}!\n"
-                                                        f"На связи бот MVP-connect.\n"
-                                                        f"С его помощью Вы сможете задать все вопросы оператору.\n"
-                                                        f"Для начала диалога, нажмите кнопку [Начать диалог] внизу.\n"
-                                                        f"Как только оператор примет Ваш запрос, Вы увидите сообщение \"Оператор на связи\"")
 
                 self.talking_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
                 talking_start = KeyboardButton('Начать диалог')
                 self.talking_keyboard.add(talking_start)
-                self.message_hystory.append(await bot.send_message(message.chat.id, 'Для того, чтобы начать диалог, нажмите на кнопку', reply_markup=self.talking_keyboard))
+                await bot.send_message(message.chat.id, f"Добрый день, {message.from_user.first_name}!\n"
+                                                        f"На связи бот MVP-connect.\n"
+                                                        f"С его помощью Вы сможете задать все вопросы оператору.\n"
+                                                        f"Для начала диалога, нажмите кнопку [Начать диалог] внизу.\n"
+                                                        f"Как только оператор примет Ваш запрос, Вы увидите сообщение \"Оператор на связи\"",
+                                       reply_markup=self.talking_keyboard)
             else:
                 self.message_hystory.append(await bot.send_message(self.admin_id, 'Бот активен'))
 
