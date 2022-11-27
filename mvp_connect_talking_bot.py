@@ -53,6 +53,8 @@ class TalkingBot:
         # 5755261667 (Ruslan)
         # 1763672666 (Настя)
         # 758905227 (Александр)
+
+
     def main_self(self):
 
         @dp.message_handler(commands=['start'])
@@ -69,9 +71,7 @@ class TalkingBot:
                 talking_start = KeyboardButton('Начать диалог')
                 self.talking_keyboard.add(talking_start)
                 await bot.send_message(message.chat.id, f"Добрый день, {message.from_user.first_name}!\n"
-                                                        f"На связи бот MVP-connect.\n"
-                                                        f"С его помощью Вы сможете задать все вопросы оператору.\n"
-                                                        f"Для начала диалога, нажмите кнопку [Начать диалог] внизу.\n"
+                                                        f"Для начала диалога, нажмите кнопку \"Начать диалог\" внизу ⬇️.\n"
                                                         f"Как только оператор примет Ваш запрос, Вы увидите сообщение \"Оператор на связи\"",
                                        reply_markup=self.talking_keyboard)
             else:
